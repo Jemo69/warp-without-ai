@@ -943,6 +943,87 @@ pub const RELEASE_FLAGS: &[FeatureFlag] = &[
 pub const RUNTIME_FEATURE_FLAGS: &[FeatureFlag] = &[];
 
 impl FeatureFlag {
+    fn is_ai_flag(&self) -> bool {
+        match self {
+            FeatureFlag::CommandCorrectionKey => true,
+            FeatureFlag::CommandCorrectionsHistoryRule => true,
+            FeatureFlag::AgentMode => true,
+            FeatureFlag::AgentModeAnalytics => true,
+            FeatureFlag::RemoveAutosuggestionDuringTabCompletions => true,
+            FeatureFlag::DefaultWaterfallMode => true,
+            FeatureFlag::SelectablePrompt => true,
+            FeatureFlag::AgentPredict => true,
+            FeatureFlag::AgentModeWorkflows => true,
+            FeatureFlag::AIRules => true,
+            FeatureFlag::AIBlockOverflowMenu => true,
+            FeatureFlag::CycleNextCommandSuggestion => true,
+            FeatureFlag::PartialNextCommandSuggestions => true,
+            FeatureFlag::AIGeneratedOnboardingSuggestions => true,
+            FeatureFlag::ValidateAutosuggestions => true,
+            FeatureFlag::PromptSuggestionsViaMAA => true,
+            FeatureFlag::ClearAutosuggestionOnEscape => true,
+            FeatureFlag::GlobalAIAnalyticsBanner => true,
+            FeatureFlag::GlobalAIAnalyticsCollection => true,
+            FeatureFlag::AIMemories => true,
+            FeatureFlag::AgentModePrimaryXML => true,
+            FeatureFlag::AgentModePrePlanXML => true,
+            FeatureFlag::AgentOnboarding => true,
+            FeatureFlag::SuggestedRules => true,
+            FeatureFlag::SuggestedAgentModeWorkflows => true,
+            FeatureFlag::PredictAMQueries => true,
+            FeatureFlag::McpServer => true,
+            FeatureFlag::ReloadStaleConversationFiles => true,
+            FeatureFlag::AIContextMenuEnabled => true,
+            FeatureFlag::AtMenuOutsideOfAIMode => true,
+            FeatureFlag::AIResumeButton => true,
+            FeatureFlag::AgentDecidesCommandExecution => true,
+            FeatureFlag::AIContextMenuCommands => true,
+            FeatureFlag::AIContextMenuCode => true,
+            FeatureFlag::GithubPrPromptChip => true,
+            FeatureFlag::AllowIgnoringInputSuggestions => true,
+            FeatureFlag::McpOauth => true,
+            FeatureFlag::AgentSharedSessions => true,
+            FeatureFlag::AmbientAgentsCommandLine => true,
+            FeatureFlag::SummarizationConversationCommand => true,
+            FeatureFlag::MCPGroupedServerContext => true,
+            FeatureFlag::McpDebuggingIds => true,
+            FeatureFlag::MarkdownMermaid => true,
+            FeatureFlag::EditableMarkdownMermaid => true,
+            FeatureFlag::AgentManagementView => true,
+            FeatureFlag::AgentManagementDetailsView => true,
+            FeatureFlag::ScheduledAmbientAgents => true,
+            FeatureFlag::AgentView => true,
+            FeatureFlag::AgentViewBlockContext => true,
+            FeatureFlag::InteractiveConversationManagementView => true,
+            FeatureFlag::AgentTips => true,
+            FeatureFlag::AgentModeComputerUse => true,
+            FeatureFlag::CloudConversations => true,
+            FeatureFlag::AgentViewPromptChip => true,
+            FeatureFlag::AgentToolbarEditor => true,
+            FeatureFlag::AmbientAgentsRTC => true,
+            FeatureFlag::AgentViewConversationListView => true,
+            FeatureFlag::ConversationArtifacts => true,
+            FeatureFlag::OzPlatformSkills => true,
+            FeatureFlag::OzIdentityFederation => true,
+            FeatureFlag::OzChangelogUpdates => true,
+            FeatureFlag::AmbientAgentsImageUpload => true,
+            FeatureFlag::OzLaunchModal => true,
+            FeatureFlag::FileBasedMcp => true,
+            FeatureFlag::ActiveConversationRequiresInteraction => true,
+            FeatureFlag::ConversationsAsContext => true,
+            FeatureFlag::CLIAgentRichInput => true,
+            FeatureFlag::AgentHarness => true,
+            FeatureFlag::OzHandoff => true,
+            FeatureFlag::CodexNotifications => true,
+            FeatureFlag::FreeUserNoAi => true,
+            FeatureFlag::AskUserQuestion => true,
+            FeatureFlag::ConversationApi => true,
+            FeatureFlag::TrimTrailingBlankLines => true,
+            _ => false,
+        }
+    }
+
+
     pub fn is_enabled(&self) -> bool {
         #[cfg(all(debug_assertions, not(feature = "test-util")))]
         {
@@ -953,6 +1034,7 @@ impl FeatureFlag {
             );
         }
 
+        if self.is_ai_flag() { return false; }
         overrides::get_override(*self)
             .or(USER_PREFERENCE_MAP[*self as usize].get())
             .or(Some(FLAG_STATES[*self as usize].load(Ordering::Relaxed)))

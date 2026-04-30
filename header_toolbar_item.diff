@@ -1,0 +1,37 @@
+<<<<<<< SEARCH
+    pub fn default_left() -> Vec<Self> {
+        vec![Self::TabsPanel, Self::ToolsPanel, Self::AgentManagement]
+    }
+
+    pub fn default_right() -> Vec<Self> {
+        vec![Self::CodeReview, Self::NotificationsMailbox]
+    }
+
+    /// All toolbar item variants (availability filtering is done at the call site).
+    pub fn all_items() -> Vec<Self> {
+        vec![
+            Self::TabsPanel,
+            Self::ToolsPanel,
+            Self::AgentManagement,
+            Self::CodeReview,
+            Self::NotificationsMailbox,
+        ]
+    }
+=======
+    pub fn default_left() -> Vec<Self> {
+        vec![Self::TabsPanel, Self::ToolsPanel]
+    }
+
+    pub fn default_right() -> Vec<Self> {
+        vec![Self::CodeReview]
+    }
+
+    /// All toolbar item variants (availability filtering is done at the call site).
+    pub fn all_items() -> Vec<Self> {
+        vec![
+            Self::TabsPanel,
+            Self::ToolsPanel,
+            Self::CodeReview,
+        ]
+    }
+>>>>>>> REPLACE
